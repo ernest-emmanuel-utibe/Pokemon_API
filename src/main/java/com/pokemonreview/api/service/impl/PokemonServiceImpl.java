@@ -36,11 +36,35 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public List<PokemonDto> getAllPokemons() {
+    public List<PokemonDto> getAllPokemon() {
 //        Pokemon pokemon3 = pokemonRepository.findById(3333).orElseThrow(() -> new PokemonNotFoundException("Pokemon could not be found by id"));
         List<Pokemon> pokemon = pokemonRepository.findAll();
         // Map because it returns a new list
         return pokemon.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PokemonDto getPokemonById(int id) {
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() -> new PokemonNotFoundException("Pokemon id could not be found"));
+        return mapToDto(pokemon);
+
+    }
+
+    @Override
+    public PokemonDto updatePokemon(PokemonDto pokemonDto, int id) {
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() -> new PokemonNotFoundException("Pokemon could not be updated."));
+        pokemon.setName(pokemonDto.getName());
+        pokemon.setType(pokemonDto.getType());
+
+        Pokemon updatedPokemon = pokemonRepository.save(pokemon);
+        return mapToDto(updatedPokemon);
+    }
+
+    @Override
+    public void deletePokemonId(int id) {
+        Pokemon pokemon = pokemonRepository.findById(id).orElseThrow(() -> new PokemonNotFoundException("Pokemon id could not be deleted"));
+        pokemonRepository.delete(pokemon);
+
     }
 
     private PokemonDto mapToDto(Pokemon pokemon) {
