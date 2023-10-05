@@ -19,7 +19,15 @@ public class GlobalExceptionHandler {
         errorObject.setTimeStamp(new Date());
 
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(ReviewNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleReviewNotFoundException(ReviewNotFoundException exception, WebRequest webRequest) {
+        ErrorObject errorObject = new ErrorObject();
+        errorObject.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorObject.setMessage(exception.getMessage());
+        errorObject.setTimeStamp(new Date());
 
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
     }
 }

@@ -1,14 +1,14 @@
 package com.pokemonreview.api.service;
 
 import com.pokemonreview.api.data.dto.PokemonDto;
-import org.w3c.dom.stylesheets.LinkStyle;
+import com.pokemonreview.api.data.dto.PokemonResponse;
 
 import java.util.List;
 
 public interface PokemonService {
     PokemonDto createPokemon(PokemonDto pokemonDto);
 
-    List<PokemonDto> getAllPokemon();
+    PokemonResponse getAllPokemon(int pageNo, int pageSize);
 
     PokemonDto getPokemonById(int id);
 

@@ -1,11 +1,15 @@
 package com.pokemonreview.api.service.impl;
 
 import com.pokemonreview.api.data.dto.PokemonDto;
+import com.pokemonreview.api.data.dto.PokemonResponse;
 import com.pokemonreview.api.data.model.Pokemon;
 import com.pokemonreview.api.data.repository.PokemonRepository;
 import com.pokemonreview.api.exception.PokemonNotFoundException;
 import com.pokemonreview.api.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,11 +40,21 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public List<PokemonDto> getAllPokemon() {
-//        Pokemon pokemon3 = pokemonRepository.findById(3333).orElseThrow(() -> new PokemonNotFoundException("Pokemon could not be found by id"));
-        List<Pokemon> pokemon = pokemonRepository.findAll();
-        // Map because it returns a new list
-        return pokemon.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
+    public PokemonResponse getAllPokemon(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Pokemon> pokemons = pokemonRepository.findAll(pageable);
+        List<Pokemon> listOfPokemons = pokemons.getContent();
+        List<PokemonDto> content = listOfPokemons.stream().map(this::mapToDto).toList();
+        
+        PokemonResponse pokemonResponse = new PokemonResponse();
+        pokemonResponse.setContent(content);
+        pokemonResponse.setPageNo(pokemons.getNumber());
+        pokemonResponse.setPageSize(pokemons.getSize());
+        pokemonResponse.setTotalElements(pokemons.getTotalElements());
+        pokemonResponse.setTotalPages(pokemons.getTotalPages());
+        pokemonResponse.setLast(pokemons.isLast());
+        
+        return pokemonResponse;
     }
 
     @Override
