@@ -53,7 +53,6 @@ public class ReviewServiceImpl implements ReviewService {
         // Find the Review
         Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewNotFoundException("Review with associated pokemon not found."));
 
-        // Provide more exception handling
         if (review.getPokemon().getId() != pokemon.getId()) {
             throw new ReviewNotFoundException("This review do not belong to a pokemon");
         }
