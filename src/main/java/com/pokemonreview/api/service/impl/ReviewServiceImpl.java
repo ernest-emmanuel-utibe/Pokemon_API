@@ -60,8 +60,6 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
 
-
-
     private ReviewDto mapToDto(Review newReview) {
         ReviewDto reviewDto = new ReviewDto();
         reviewDto.setId(newReview.getId());
