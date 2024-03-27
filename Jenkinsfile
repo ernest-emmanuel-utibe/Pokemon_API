@@ -1,14 +1,14 @@
 // pipeline {
 //     agent any
 //     environment {
-//         AWS_ACCOUNT_ID = "357586184453"
-//         AWS_DEFAULT_REGION = "eu-west-1"
-//         IMAGE_REPO_NAME = "learnspace-repo-for-systest"
+//         AWS_ACCOUNT_ID = {"$ AWS ACCOUNT ID"}
+//         AWS_DEFAULT_REGION = {"AWS REGION"}
+//         IMAGE_REPO_NAME = {"REPOSITORY NAME"}
 //         IMAGE_TAG = "v1"
-//         REPOSITORY_URI = "357586184453.dkr.ecr.eu-west-1.amazonaws.com/learnspace-repo-for-systest"
-//         CLUSTER = "learnspace"
+//         REPOSITORY_URI = {"AWS ECR REPOSITORY URI"}
+//         CLUSTER = {"AWS CLUSTER NAME"}
 
-//         SERVICE = "learnspacesystestjenkins"
+//         SERVICE = {"AWS SERVICE NAME"}
 
 //     }
    
